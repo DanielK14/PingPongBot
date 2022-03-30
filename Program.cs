@@ -20,14 +20,14 @@ namespace PingPongBot
             await _client.LoginAsync(TokenType.Bot,
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
+            ulong id = ulong.Parse(Environment.GetEnvironmentVariable("DiscordChannel"));
 
             _client.MessageReceived += async e =>
             {
                 if (e.Content.ToLower().StartsWith("ping"))
                 {
-                    ulong id = ulong.Parse(Environment.GetEnvironmentVariable("DiscordChannel"));
-                    var chnl = _client.GetChannel(id) as IMessageChannel;
-                    await chnl.SendMessageAsync("pong");
+                    var pingpongchnl = _client.GetChannel(id) as IMessageChannel;
+                    await pingpongchnl.SendMessageAsync("pong");
                 }
 
             };
